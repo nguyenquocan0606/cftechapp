@@ -9,11 +9,19 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup Flutter
-        uses: subosito/flutter-action@v2
+      # ✅ Lấy đúng Flutter 3.41.2 (kèm Dart 3.11.0)
+      - name: Checkout Flutter 3.41.2
+        uses: actions/checkout@v4
         with:
-          flutter-version: "3.27.4"
-          channel: "stable"
+          repository: flutter/flutter
+          ref: 3.41.2
+          path: flutter
+
+      - name: Add Flutter to PATH
+        run: echo "$GITHUB_WORKSPACE/flutter/bin" >> $GITHUB_PATH
+
+      - name: Flutter doctor
+        run: flutter --version && flutter doctor -v
 
       - name: Install dependencies
         run: flutter pub get
